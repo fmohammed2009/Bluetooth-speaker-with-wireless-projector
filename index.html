@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>توصيل مكبر صوت بلوتوث وشاشة لاسلكية</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: #e6f2ff;
+    color: #0d2a4a;
+    overflow: hidden;
+  }
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    padding: 40px 70px;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #e6f2ff, #c9e2ff);
+  }
+  .slide.active { display: flex; }
+  .slide h1 {
+    font-size: 2.6em;
+    color: #1565c0;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .slide h2 {
+    font-size: 1.9em;
+    color: #0277bd;
+    margin-bottom: 18px;
+  }
+  .slide p, .slide li {
+    font-size: 1.3em;
+    line-height: 1.65;
+    margin-bottom: 10px;
+    color: #0d2a4a;
+  }
+  .slide ul, .slide ol { padding-right: 40px; }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    margin-top: 15px;
+  }
+  .img-box {
+    background: #ffffff90;
+    border: 2px dashed #90caf9;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(21, 101, 192, 0.15);
+  }
+  .img-box img {
+    max-width: 100%;
+    max-height: 460px;
+    border-radius: 12px;
+    object-fit: contain;
+    display: block;
+    border: 4px solid #ffffff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  }
+  .img-box .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1976d2;
+    gap: 10px;
+  }
+  .img-box .placeholder .icon {
+    font-size: 3em;
+    opacity: 0.6;
+  }
+  .img-box .placeholder .filename {
+    font-family: monospace;
+    background: #1565c0;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    direction: ltr;
+  }
+  .img-box .placeholder .desc {
+    font-size: 0.95em;
+    color: #0d2a4a;
+    max-width: 220px;
+    line-height: 1.5;
+  }
+
+  /* Slide 5 (MiraScreen dongle) — bigger image, wider box */
+  .slide:nth-child(5) .content-grid {
+    grid-template-columns: 1fr 2fr;
+  }
+  .slide:nth-child(5) .img-box {
+    min-height: 380px;
+  }
+  .slide:nth-child(5) .img-box img {
+    max-height: 360px;
+    border: none;
+    box-shadow: none;
+  }
+
+  .nav {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 15px; z-index: 100;
+  }
+  .nav button {
+    background: #1565c0;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: 0.2s;
+  }
+  .nav button:hover {
+    background: #ffb300;
+    color: #0d2a4a;
+  }
+  .counter {
+    position: fixed; top: 18px; left: 25px;
+    background: #1565c0;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 1em;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+  }
+  .code {
+    background: #0d2a4a;
+    color: #7dffb0;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: monospace;
+    display: inline-block;
+    direction: ltr;
+    font-size: 1.2em;
+  }
+</style>
+</head>
+<body>
+
+<div class="counter"><span id="cur">1</span> / <span id="total">12</span></div>
+
+<!-- شريحة 1 -->
+<div class="slide active">
+  <h1>توصيل مكبر صوت بلوتوث وشاشة لاسلكية بجهاز العرض</h1>
+  <div class="content-grid">
+    <div>
+      <p style="text-align:center; font-size:1.5em;">دليل خطوة بخطوة</p>
+      <p style="text-align:center; margin-top:20px;">Android • iPhone • Wireless Display</p>
+    </div>
+    <div class="img-box">
+      <img src="images/01-cover.png" alt="Cover"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/01-cover.png</div>
+        <div class="desc">صورة الغلاف — عرض تقديمي بجهاز بروجكتور</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 2 -->
+<div class="slide">
+  <h2>ما تحتاجه قبل البدء</h2>
+  <div class="content-grid">
+    <ul>
+      <li>✅ هاتف ذكي (Android أو iPhone)</li>
+      <li>✅ مكبر صوت بلوتوث</li>
+      <li>✅ دونجل عرض لاسلكي (Wireless Display Dongle)</li>
+      <li>✅ جهاز عرض (Projector)</li>
+      <li>✅ شبكة Wi-Fi</li>
+    </ul>
+    <div class="img-box">
+      <img src="images/02-requirements.png" alt="Requirements"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/02-requirements.png</div>
+        <div class="desc">المتطلبات — أيقونات الهاتف والسماعة والدونجل والبروجكتور</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 3 -->
+<div class="slide">
+  <h2>الخطوة 1: توصيل مكبر الصوت بهاتفك</h2>
+  <div class="content-grid">
+    <ol>
+      <li>افتح الإعدادات في هاتفك</li>
+      <li>اختر البلوتوث وقم بتشغيله</li>
+      <li>شغّل مكبر الصوت وضعه في وضع الاقتران</li>
+      <li>اختر اسم مكبر الصوت من القائمة</li>
+      <li>تأكد من ظهور "متصل"</li>
+    </ol>
+    <div class="img-box">
+      <img src="images/03-bluetooth.png" alt="Bluetooth"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/03-bluetooth.png</div>
+        <div class="desc">شاشة إعدادات البلوتوث على الهاتف مع قائمة الأجهزة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 4 -->
+<div class="slide">
+  <h2>الخطوة 2: اختيار وضع البث (Cast)</h2>
+  <div class="content-grid">
+    <div>
+      <p><strong>Android:</strong> اسحب من الأعلى ← Cast / Smart View</p>
+      <p><strong>iPhone:</strong> مركز التحكم ← Screen Mirroring</p>
+      <p>ثم اختر اسم دونجل العرض اللاسلكي.</p>
+    </div>
+    <div class="img-box">
+      <img src="images/04-cast.png" alt="Cast"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/04-cast.png</div>
+        <div class="desc">قائمة أجهزة البث / تكرار الشاشة المتاحة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 5 -->
+<div class="slide">
+  <h2>الخطوة 3: إذا لم يكن الدونجل متصلاً بالشبكة</h2>
+  <div class="content-grid">
+    <p>إذا لم يكن الدونجل متصلاً بشبكتك المحلية، اتبع الخطوات التالية (أ – و).</p>
+    <div class="img-box">
+      <img src="images/05-dongle.png" alt="Dongle"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/05-dongle.png</div>
+        <div class="desc">دونجل العرض اللاسلكي متصل بالبروجكتور</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 6 -->
+<div class="slide">
+  <h2>الخطوة 3أ: اختيار شبكة الدونجل</h2>
+  <div class="content-grid">
+    <ul>
+      <li>اذهب إلى الإعدادات ← Wi-Fi</li>
+      <li>ستظهر قائمة بالشبكات المتاحة</li>
+      <li>اختر شبكة الدونجل (Cast / Mirror / Dongle)</li>
+    </ul>
+    <div class="img-box">
+      <img src="images/06-wifi-list.png" alt="WiFi list"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/06-wifi-list.png</div>
+        <div class="desc">قائمة شبكات Wi-Fi مع تحديد شبكة الدونجل</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 7 -->
+<div class="slide">
+  <h2>الخطوة 3ب: إدخال كلمة مرور الدونجل</h2>
+  <div class="content-grid">
+    <ul>
+      <li>أدخل كلمة المرور (على الدونجل أو في الدليل)</li>
+      <li>بعد الإدخال، سيتم توصيل هاتفك بالدونجل</li>
+    </ul>
+    <div class="img-box">
+      <img src="images/07-dongle-password.png" alt="Dongle password"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/07-dongle-password.png</div>
+        <div class="desc">شاشة إدخال كلمة مرور شبكة الدونجل</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 8 -->
+<div class="slide">
+  <h2>الخطوة 3ج: فتح المتصفح وإدخال عنوان IP</h2>
+  <div class="content-grid">
+    <div>
+      <ul>
+        <li>افتح المتصفح (Chrome / Safari)</li>
+        <li>اكتب عنوان IP الظاهر على شاشة العرض</li>
+      </ul>
+      <p>مثال: <span class="code">192.168.203.1</span></p>
+    </div>
+    <div class="img-box">
+      <img src="images/08-ip-browser.png" alt="Browser IP"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/08-ip-browser.png</div>
+        <div class="desc">المتصفح مع إدخال عنوان IP الظاهر على الشاشة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 9 -->
+<div class="slide">
+  <h2>الخطوة 3د: قائمة الشبكات اللاسلكية</h2>
+  <div class="content-grid">
+    <p>بعد فتح الصفحة، سترى على هاتفك قائمة بجميع الشبكات اللاسلكية في منطقتك. اختر الشبكة التي تريد الاتصال بها.</p>
+    <div class="img-box">
+      <img src="images/09-network-list.png" alt="Network list"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/09-network-list.png</div>
+        <div class="desc">صفحة الدونجل تعرض قائمة الشبكات المتاحة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 10 -->
+<div class="slide">
+  <h2>الخطوة 3هـ: مدير الشبكة Alnoor-AP</h2>
+  <div class="content-grid">
+    <ul>
+      <li>من القائمة، اختر Network Manager</li>
+      <li>ثم اختر شبكة Alnoor-AP</li>
+    </ul>
+    <div class="img-box">
+      <img src="images/10-network-manager.png" alt="Network manager"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/10-network-manager.png</div>
+        <div class="desc">صفحة Network Manager مع تحديد Alnoor-AP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 11 -->
+<div class="slide">
+  <h2>الخطوة 3و: إدخال كلمة مرور الشبكة</h2>
+  <div class="content-grid">
+    <div>
+      <ul>
+        <li>اكتب كلمة المرور، مثال: <span class="code">99068945</span></li>
+        <li>اضغط حفظ / اتصال</li>
+        <li>انتظر حتى يتم الاتصال ✅</li>
+      </ul>
+    </div>
+    <div class="img-box">
+      <img src="images/11-network-password.png" alt="Network password"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/11-network-password.png</div>
+        <div class="desc">إدخال كلمة مرور شبكة Alnoor-AP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- شريحة 12 -->
+<div class="slide">
+  <h1>تم! 🎉</h1>
+  <div class="content-grid">
+    <ul>
+      <li>✅ مكبر الصوت متصل</li>
+      <li>✅ الشاشة اللاسلكية متصلة</li>
+      <li>✅ الدونجل متصل بشبكتك</li>
+    </ul>
+    <div class="img-box">
+      <img src="images/12-done.png" alt="Done"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none">
+        <div class="icon">🖼️</div>
+        <div class="filename">images/12-done.png</div>
+        <div class="desc">العرض يعمل بنجاح على البروجكتور</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button onclick="prev()">▶ السابق</button>
+  <button onclick="next()">التالي ◀</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+  document.getElementById('total').textContent = slides.length;
+
+  function show(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    document.getElementById('cur').textContent = i + 1;
+  }
+  function next() { if (idx < slides.length - 1) { idx++; show(idx); } }
+  function prev() { if (idx > 0) { idx--; show(idx); } }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  next();
+    if (e.key === 'ArrowRight') prev();
+  });
+</script>
+</body>
+</html>
